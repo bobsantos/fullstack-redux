@@ -1,10 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Voting from './components/Voting';
+import {Router, Route, hashHistory} from 'react-router';
 
-const pair = ['Jessy Mendiola', 'Arci Munoz'];
+import App from './components/App';
+import Voting from './components/Voting';
+import Results from './components/Results';
+
+const routes = <Route component={App}>
+	<Route path="/results" component={Results} />
+	<Route path="/" component={Voting} />
+</Route>;
 
 ReactDOM.render(
-	<Voting pair={pair} winner="Jessy Mendiola" />,
+	<Router history={hashHistory}>{routes}</Router>,
 	document.getElementById('app')
 );

@@ -1,4 +1,5 @@
 import {expect} from 'chai';
+import {List} from 'immutable';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -55,5 +56,19 @@ describe('Voting', () => {
 		const winner = ReactDOM.findDOMNode(component.refs.winner);
 		expect(winner).to.be.ok;
 		expect(winner.textContent).to.contain('Jessy Mendiola');
+	});
+
+	it('renders as a pure component', () => {
+		const pair = List.of('Jessy Mendiola', 'Arci Munoz');
+		const container = document.createElement('div');
+		let component = ReactDOM.render(<Voting pair={pair} />, container);
+
+		let firstButton = scryRenderedDOMComponentsWithTag(component, 'button')[0];
+		expect(firstButton.textContent).to.equal('Jessy Mendiola');
+
+		pair[0] = 'Jennylyn Mercado';
+		component = ReactDOM.render(<Voting pair={pair} />, container);
+		firstButton = scryRenderedDOMComponentsWithTag(component, 'button')[0];
+		expect(firstButton.textContent).to.equal('Jessy Mendiola');
 	});
 });
